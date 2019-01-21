@@ -2,7 +2,7 @@ import autograd.numpy as np
 from functions import make_functions, init_params
 from parameter_server import Parameter_Server
 from autograd import value_and_grad
-from autograd.util import quick_grad_check, check_grads
+from autograd.util import quick_grad_check #, check_grads
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import gridspec
@@ -28,7 +28,7 @@ def opt_traj(func, fdict, T, opt_method = 'SGD', init = None, \
     loss_and_grad = value_and_grad(func)
     #quick_grad_check(func, params)   
     params = init_params(params, domain, init, seed)
-    check_grads(func, params)
+    # check_grads(func, params)
     opt_server = Parameter_Server(opt_method, momentum)
     opt_server.init_gradient_storage(params)
     
@@ -36,8 +36,8 @@ def opt_traj(func, fdict, T, opt_method = 'SGD', init = None, \
     y_traj = []
     f_traj = []
     
-    print 'optimising function using %s...' % opt_method
-    for t in xrange(T):
+    print('optimising function using', opt_method)
+    for t in range(T):
         (func_value, func_grad) = loss_and_grad(params)
         x_traj.append(params['x'])
         y_traj.append(params['y'])
@@ -208,12 +208,12 @@ if __name__ == '__main__':
     results = {'SGD': [], 'ADAGRAD': [], 'RMSPROP': [], 
         'ADADELTA': [], 'ADAM': []}
     func, fdict = make_functions(func_name)
-    print 'optimising %s function:' % func_name
+    print('optimising function:', func_name)
     for opt in results.keys():
         x_traj, y_traj, f_traj  = opt_traj(func, fdict, T, opt_method = opt, 
             init = init, learning_rate = lr, momentum = momentum,
             noise_level = noise_level)
         results[opt] = [x_traj, y_traj, f_traj]
-    print 'optimum:', fdict['optimum']
+    print('optimum:', fdict['optimum'])
     show_anim(T, results, fdict, interval = 50)
 

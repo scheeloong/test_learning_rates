@@ -73,7 +73,7 @@ def init_params(params, domain, init = None, seed = 0):
         if init[1] <= domain[1, 0] or init[1] >= domain[1, 1]:
             re_init = True
         if re_init is True:
-            print 'invalid initialisation, do random init instead...'
+            print('invalid initialisation, do random init instead...')
             init = None
     
     if init is None:
@@ -87,7 +87,8 @@ def init_params(params, domain, init = None, seed = 0):
               
     params['x'] = init[0]
     params['y'] = init[1]       
-    print 'initialise x =', init[0], 'y =', init[1]
+    print('initialise x =', init[0])
+    print('initialise y =', init[1])
         
     return params
 
